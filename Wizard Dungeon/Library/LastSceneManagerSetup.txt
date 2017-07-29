@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/000.unity
+- path: C:/Users/Roikomilmi/Desktop/Cours/Programmation/AI_CTF_BASE_v1.1/Assets/teamA.unity
   isLoaded: 1
   isActive: 1
