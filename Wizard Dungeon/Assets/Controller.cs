@@ -3,40 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour {
-	public float speed = 0.4f;
-	Vector2 dest = Vector2.zero;
+	bool check= false;
 
-	void Start() {
-		dest = transform.position;
+	public float speed = 2f;
+
+	// Use this for initialization
+	void Start () {
 	}
 
-	void FixedUpdate() {
-		// Move closer to Destination
-		Vector2 p = Vector2.MoveTowards(transform.position, dest, speed);
-		GetComponent<Rigidbody2D>().MovePosition(p);
+	// Update is called once per frame
+	void Update () {
+		CheckKeys();
 
-		// Check for Input if not moving
-		if ((Vector2)transform.position == dest) {
-			if (Input.GetKey(KeyCode.UpArrow) && valid(Vector2.up))
-				dest = (Vector2)transform.position + Vector2.up;
-			if (Input.GetKey(KeyCode.RightArrow) && valid(Vector2.right))
-				dest = (Vector2)transform.position + Vector2.right;
-			if (Input.GetKey(KeyCode.DownArrow) && valid(-Vector2.up))
-				dest = (Vector2)transform.position - Vector2.up;
-			if (Input.GetKey(KeyCode.LeftArrow) && valid(-Vector2.right))
-				dest = (Vector2)transform.position - Vector2.right;
+	}
+
+	void CheckKeys(){
+		Vector2 Truc = (Vector2)transform.position;
+		if(Input.GetKey(KeyCode.Q)){
+			Truc += Vector2.left * speed * Time.deltaTime;
+			transform.localPosition = Truc;
+		}
+		if(Input.GetKey(KeyCode.D)){
+			Truc += Vector2.right * speed * Time.deltaTime;
+			transform.localPosition = Truc;
+		}
+		if(Input.GetKey(KeyCode.Z)){
+			Truc += Vector2.up * speed * Time.deltaTime;
+			transform.localPosition = Truc;
+		}
+		if(Input.GetKey(KeyCode.S)){
+			Truc += Vector2.down * speed * Time.deltaTime;
+			transform.localPosition = Truc;
 		}
 
-		// Animation Parameters
-		Vector2 dir = dest - (Vector2)transform.position;
-		GetComponent<Animator>().SetFloat("DirX", dir.x);
-		GetComponent<Animator>().SetFloat("DirY", dir.y);
-	}
 
-	bool valid(Vector2 dir) {
-		// Cast Line from 'next to Pac-Man' to 'Pac-Man'
-		Vector2 pos = transform.position;
-		RaycastHit2D hit = Physics2D.Linecast(pos + dir, pos);
-		return (hit.collider == GetComponent<Collider2D>());
+}
+
+void OnCollisionEnter(Collision col){
+	if(col.collider.gameObject.layer==LayerMask.NameToLayer("Coffre")){
+		//CheckKeys();
+		if(/*check == true*/ Input.GetKey(KeyCode.Mouse0)){
+			Debug.Log ("Coffre");
+		}
+		//afficher dialogue de liste coffre
 	}
+}
 }
