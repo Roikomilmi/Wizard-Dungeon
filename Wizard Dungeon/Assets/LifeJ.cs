@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class LifeJ : MonoBehaviour {
@@ -9,7 +10,11 @@ public class LifeJ : MonoBehaviour {
 	bool invincible = false;
 	public int TempsInv;	//Temps invincibilité, peut être changé en amont
 
+	public Text lifetxt;
 
+	void Start(){
+		SetLifeText ();
+	}
 
 
 	void Update(){			//Permet de savoir si le personnage est mort
@@ -21,8 +26,9 @@ public class LifeJ : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D co) {	//Permet de trigger le fait qu'un ennemi nous touche
 		if (!invincible) {
-			if (co.name == "zou_0") {
+			if (co.name == "Zou") {
 				life -= 1;					//Pert 1 points de vie
+				SetLifeText ();
 				Recul();
 				StartCoroutine (Invincibilite ());	//Rends invincible
 			}
@@ -31,7 +37,7 @@ public class LifeJ : MonoBehaviour {
 
 	public void Recul(){ //Permet de reculer quand des dégats sont pris
 
-		Vector2 MonstrePerso = GameObject.Find ("zou_0").transform.position - transform.position;	//Vecteur entre le monstre, et le perso
+		Vector2 MonstrePerso = GameObject.Find ("Zou").transform.position - transform.position;	//Vecteur entre le monstre, et le perso
 		Vector2 Horizontal = new Vector2 (1, 0);													//Vecteur horizontal pour l'angle
 		Vector2 Temp = (Vector2)transform.position;													//Vecteur temporaire pour le deplacement
 
@@ -66,5 +72,9 @@ public class LifeJ : MonoBehaviour {
 		Debug.Log ("bla");
 		yield return new WaitForSeconds (TempsInv);
 		invincible = false;
+	}
+
+	void SetLifeText(){
+		lifetxt.text = "Life : " + life.ToString ();
 	}
 }
