@@ -26,7 +26,7 @@ public class LifeJ : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D co) {	//Permet de trigger le fait qu'un ennemi nous touche
 		if (!invincible) {
-			if (co.name == "Zou") {
+			if (co.tag == "mob") {
 				life -= 1;					//Pert 1 points de vie
 				SetLifeText ();
 				Recul();
