@@ -25,32 +25,25 @@ public class Controller : MonoBehaviour {
 
 	void CheckKeys(){
 		Vector2 posJ = (Vector2)transform.position;
-		if(Input.GetKey(KeyCode.Q) && valid(-Vector2.right)){
+		if(Input.GetKey(KeyCode.Q)){
 			Debug.Log("CUL !");
 			posJ += Vector2.left * speed * Time.deltaTime;
 			transform.localPosition = posJ;
 		}
-		if(Input.GetKey(KeyCode.D) && valid(Vector2.right)){
+		if(Input.GetKey(KeyCode.D)){
 			posJ += Vector2.right * speed * Time.deltaTime;
 			transform.localPosition = posJ;
 		}
-		if(Input.GetKey(KeyCode.Z) && valid(Vector2.up)){
+		if(Input.GetKey(KeyCode.Z)){
 			posJ += Vector2.up * speed * Time.deltaTime;
 			transform.localPosition = posJ;
 		}
-		if (Input.GetKey (KeyCode.S) && valid (-Vector2.up)) {
+		if (Input.GetKey (KeyCode.S)) {
 			posJ += Vector2.down * speed * Time.deltaTime;
 			transform.localPosition = posJ;
 		} else {
 		}
 
 	}
-
-
-	bool valid(Vector2 dir) {
-		// Cast Line from 'next to Pac-Man' to 'Pac-Man'
-		Vector2 pos = (Vector2)transform.position;
-		RaycastHit2D hit = Physics2D.Linecast((pos + dir), pos);
-		return (hit.collider == GetComponent<Collider2D>());
-	}
+		
 }
